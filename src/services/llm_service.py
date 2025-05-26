@@ -1,58 +1,83 @@
-from typing import Dict, Any
-from interfaces.llm_interface import LLMInterface
-import google.generativeai as genai
 import os
 import json
-import re
-from dotenv import load_dotenv
-
-load_dotenv()  # Load environment variables from .env file
+from typing import Dict, Any, List
+from google.generativeai import GenerativeModel
+from interfaces.llm_interface import LLMInterface
 
 class GeminiLLMService(LLMInterface):
-    def __init__(self, api_key: str = os.getenv("GOOGLE_API_KEY")):
+    def __init__(self):
+        api_key = os.getenv("GOOGLE_API_KEY")
         if not api_key:
-            raise ValueError("GOOGLE_API_KEY environment variable not set")
-        genai.configure(api_key=api_key)
-        self.model = genai.GenerativeModel('gemini-1.5-flash')
+            raise ValueError("GOOGLE_API_KEY not found in environment variables")
+        self.model = GenerativeModel("gemini-1.5-flash")
 
     def generate_leetcode_question(self, sentence: str) -> Dict[str, Any]:
         prompt = f"""
-        You are a programming problem generator. Convert the following sentence into a LeetCode-style programming problem and return the result as a valid JSON object. The response must contain ONLY the JSON object, with no additional text, markdown, code blocks (e.g., ```json), or explanations outside the JSON. The JSON must include the following fields: title, description, input_format, output_format, constraints (as a list of strings), examples (as a list of objects with input, output, and explanation fields), and difficulty (Easy, Medium, or Hard). The problem must be clear, concise, and follow LeetCode conventions.
+        You are a LeetCode problem creator. Given the following sentence, create a LeetCode-style programming problem in valid JSON format. The problem should include the following fields:
+        - id: A unique identifier for the problem (leave as empty string, to be filled later)
+        - title: A concise title for the problem
+        - description: A detailed description of the problem
+        - input_format: Description of the input format
+        - output_format: Description of the output format
+        - constraints: A list of constraints for the input
+        - examples: A list of example cases, each with input, output, and explanation
+        - difficulty: One of "Easy", "Medium", or "Hard"
+        - edge_cases: A list of edge cases that solutions should handle
+        - approaches: A list of possible solution approaches, each with name, description, time_complexity, and space_complexity
+
+        Ensure the output is valid JSON and contains only the problem object.
 
         Sentence: {sentence}
 
-        Example JSON output:
+        Example output:
         {{
-            "title": "Example Problem",
-            "description": "Description of the problem.",
-            "input_format": "Description of input.",
-            "output_format": "Description of output.",
-            "constraints": ["Constraint 1", "Constraint 2"],
+            "id": "",
+            "title": "Sum of Even Numbers",
+            "description": "Given an array of integers, return the sum of all even numbers in the array.",
+            "input_format": "An array of integers nums.",
+            "output_format": "An integer representing the sum of all even numbers.",
+            "constraints": [
+                "1 <= nums.length <= 10^4",
+                "-10^5 <= nums[i] <= 10^5"
+            ],
             "examples": [
                 {{
-                    "input": "Example input",
-                    "output": "Example output",
-                    "explanation": "Explanation of the example"
+                    "input": "nums = [1, 2, 3, 4, 5, 6]",
+                    "output": "12",
+                    "explanation": "The even numbers are 2, 4, and 6. Their sum is 2 + 4 + 6 = 12."
                 }}
             ],
-            "difficulty": "Easy"
+            "difficulty": "Easy",
+            "edge_cases": [
+                "Empty array",
+                "Array with no even numbers",
+                "Array with all even numbers"
+            ],
+            "approaches": [
+                {{
+                    "name": "Linear Scan",
+                    "description": "Iterate through the array and sum even numbers.",
+                    "time_complexity": "O(n)",
+                    "space_complexity": "O(1)"
+                }}
+            ]
         }}
         """
         try:
             response = self.model.generate_content(prompt)
-            response_text = response.text.strip()
-            
-            # Attempt to extract JSON if wrapped in code blocks
-            json_match = re.search(r'\{.*\}', response_text, re.DOTALL)
-            if json_match:
-                response_text = json_match.group(0)
-            
-            # Parse the response as JSON
-            try:
-                return json.loads(response_text)
-            except json.JSONDecodeError as e:
-                # Log the raw response for debugging
-                print(f"Raw Gemini API response: {response_text}")
-                raise ValueError(f"Gemini API returned invalid JSON: {str(e)}")
+            question_data = json.loads(response.text.strip("```json\n").strip("```"))
+            return question_data
         except Exception as e:
-            raise ValueError(f"Gemini API request failed: {str(e)}")
+            print(f"Error generating question: {str(e)}")
+            return {
+                "id": "",
+                "title": "Error",
+                "description": "Failed to generate question",
+                "input_format": "",
+                "output_format": "",
+                "constraints": [],
+                "examples": [],
+                "difficulty": "Easy",
+                "edge_cases": [],
+                "approaches": []
+            }
