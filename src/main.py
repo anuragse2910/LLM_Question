@@ -16,8 +16,8 @@ def main():
     workflow = QuestionWorkflow(llm, storage, parser, formatter)
     
     # Example input sentence
-    sentence = "Given a list of numbers, find the sum of all even numbers"
-    
+    # sentence = "Given a list of numbers, find the sum of all even numbers"
+    sentence = input("Enter a sentence to generate a LeetCode question: ")   
     # Run workflow
     result = workflow.generate_and_store_question(sentence)
     

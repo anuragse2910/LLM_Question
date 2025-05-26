@@ -1,0 +1,36 @@
+[
+  {
+    "id": "8141a2f8-ada9-4fd8-adb8-4d35a6bfd5cc",
+    "title": "Sum of Even Numbers",
+    "description": "Given an integer array `nums`, return the sum of all even numbers in the array.",
+    "input_format": "An integer array `nums`.",
+    "output_format": "An integer representing the sum of all even numbers in `nums`.",
+    "constraints": [
+      "1 <= nums.length <= 1000",
+      "-1000 <= nums[i] <= 1000"
+    ],
+    "examples": [
+      {
+        "input": "[1,2,3,4,5,6]",
+        "output": 12,
+        "explanation": "The even numbers are 2, 4, and 6. Their sum is 2 + 4 + 6 = 12."
+      },
+      {
+        "input": [
+          1,
+          3,
+          5,
+          7
+        ],
+        "output": 0,
+        "explanation": "There are no even numbers in the array."
+      },
+      {
+        "input": [],
+        "output": 0,
+        "explanation": "The input array is empty, so the sum of even numbers is 0."
+      }
+    ],
+    "difficulty": "Easy"
+  }
+]

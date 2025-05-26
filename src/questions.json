@@ -37,5 +37,148 @@
       }
     ],
     "difficulty": "Easy"
+  },
+  {
+    "id": "03df1ce0-6d56-42f6-8cc2-b5a25063b472",
+    "title": "Binary Search",
+    "description": "Given a sorted array of integers `nums` and an integer `target`, write a function that returns the index of `target` if it is present in `nums`, otherwise return -1. You must write an algorithm with O(log n) runtime complexity.",
+    "input_format": "An array of integers `nums` and an integer `target`.",
+    "output_format": "An integer representing the index of `target` in `nums` if found, otherwise -1.",
+    "constraints": [
+      "1 <= nums.length <= 10^4",
+      "-10^4 <= nums[i], target <= 10^4",
+      "All the integers in nums are unique."
+    ],
+    "examples": [
+      {
+        "input": {
+          "nums": [
+            -1,
+            0,
+            3,
+            5,
+            9,
+            12
+          ],
+          "target": 9
+        },
+        "output": 4,
+        "explanation": "9 exists in nums at index 4."
+      },
+      {
+        "input": {
+          "nums": [
+            -1,
+            0,
+            3,
+            5,
+            9,
+            12
+          ],
+          "target": 2
+        },
+        "output": -1,
+        "explanation": "2 does not exist in nums."
+      },
+      {
+        "input": {
+          "nums": [
+            5
+          ],
+          "target": 5
+        },
+        "output": 0,
+        "explanation": "5 exists in nums at index 0."
+      }
+    ],
+    "difficulty": "Easy"
+  },
+  {
+    "id": "cb6b5865-2437-4227-80c7-188b55eed30a",
+    "title": "Palindrome Checker",
+    "description": "Given a string, determine if it is a palindrome, considering only alphanumeric characters and ignoring case.",
+    "input_format": "A string s.",
+    "output_format": "A boolean value: true if s is a palindrome, false otherwise.",
+    "constraints": [
+      "1 <= s.length <= 10^5",
+      "s consists of printable ASCII characters."
+    ],
+    "examples": [
+      {
+        "input": "A man, a plan, a canal: Panama",
+        "output": true,
+        "explanation": "After removing non-alphanumeric characters and converting to lowercase, the string becomes \"amanaplanacanalpanama\", which is a palindrome."
+      },
+      {
+        "input": "race a car",
+        "output": true,
+        "explanation": "After removing non-alphanumeric characters and converting to lowercase, the string becomes \"raceacar\", which is a palindrome."
+      },
+      {
+        "input": "hello",
+        "output": false,
+        "explanation": "The string is not a palindrome."
+      }
+    ],
+    "difficulty": "Easy"
+  },
+  {
+    "id": "a605b643-217a-43e1-95b4-997ec7aa1dac",
+    "title": "Reverse Linked List",
+    "description": "Given the head of a singly linked list, reverse the list, and return the reversed list.",
+    "input_format": "The head of a singly linked list.",
+    "output_format": "The head of the reversed linked list.",
+    "constraints": [
+      "The number of nodes in the list is in the range [0, 5000].",
+      "-5000 <= Node.val <= 5000",
+      "The list is guaranteed to be a singly linked list."
+    ],
+    "examples": [
+      {
+        "input": "[1,2,3,4,5]",
+        "output": "[5,4,3,2,1]",
+        "explanation": "After reversing the list, 5 becomes the first node, 4 the second, and so on."
+      },
+      {
+        "input": "[1,2]",
+        "output": "[2,1]",
+        "explanation": "After reversing the list, 2 becomes the first node, and 1 the second."
+      },
+      {
+        "input": "[]",
+        "output": "[]",
+        "explanation": "An empty list remains empty after reversing."
+      }
+    ],
+    "difficulty": "Easy"
+  },
+  {
+    "id": "517b7efc-74d4-49a4-a507-43520b42a7c0",
+    "title": "Find Duplicates in an Array",
+    "description": "Given an integer array `nums`, return an array of all the numbers that appear more than once in the array. You can return the answer in any order.",
+    "input_format": "An integer array `nums`.",
+    "output_format": "An integer array containing the duplicate numbers. The returned array should not contain duplicates.",
+    "constraints": [
+      "1 <= nums.length <= 105",
+      "-104 <= nums[i] <= 104"
+    ],
+    "examples": [
+      {
+        "input": "[1, 2, 3, 4, 5, 1, 2]",
+        "output": "[1, 2]",
+        "explanation": "The numbers 1 and 2 appear more than once in the array."
+      },
+      {
+        "input": "[1, 2, 3, 4, 5]",
+        "output": "[]",
+        "explanation": "There are no duplicate numbers in the array."
+      },
+      {
+        "input": "[1,1,1,1]",
+        "output": "[1]",
+        "explanation": "The number 1 appears more than once."
+      }
+    ],
+    "difficulty": "Easy"
   }
 ]
