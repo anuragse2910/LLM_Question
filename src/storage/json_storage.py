@@ -1,9 +1,12 @@
 import json
 from typing import Dict, Any
 from interfaces.storage_interface import StorageInterface
+from pathlib import Path
+
+DATA_PATH = Path(__file__).resolve().parent.parent /"Data"/"questions.json"
 
 class JsonStorage(StorageInterface):
-    def __init__(self, file_path: str = "questions.json"):
+    def __init__(self, file_path: str = DATA_PATH):
         self.file_path = file_path
 
     def save_question(self, question: Dict[str, Any]) -> None:
